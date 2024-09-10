@@ -1,0 +1,4 @@
+[submodule "oneapi-construction-kit"]
+	path = oneapi-construction-kit
+	url = git@github.com:nuway-ai/oneapi-construction-kit.git
+	branch = dev
