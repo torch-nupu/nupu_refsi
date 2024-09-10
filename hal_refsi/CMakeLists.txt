@@ -56,7 +56,9 @@ else()
 endif()
 set_property(GLOBAL PROPERTY HAL_REFSI_EXAMPLE_DIR "${HAL_REFSI_SOURCE_DIR}/examples/${EXAMPLES_IF}")
 
-add_subdirectory(external)
+# add_subdirectory(external)
+# `./external` -> `../driver`
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../driver PARENT_SCOPE)
 
 include(Bin2H)
 include(BakedFile)
