@@ -1,0 +1,49 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "base",
+      "description": "do not use base config!",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_INSTALL_RPATH_USE_LINK_PATH": true,
+        "CA_RUNTIME_COMPILER_ENABLED": true,
+        "CA_RISCV_ENABLED": true,
+        "CA_CL_ENABLE_ICD_LOADER": true,
+        "CA_ENABLE_API": "cl",
+        "CA_ENABLE_DOCUMENTATION": false,
+        "CA_ENABLE_TESTS": false,
+        "CA_RISCV_EXTERNAL_HAL_DIR": "${sourceDir}/../hal_refsi",
+        "CA_RISCV_DEVICE": "RefSi M1.*",
+        "HAL_REFSI_SOC": "M1",
+        "CA_MUX_COMPILERS_TO_ENABLE": "host;riscv;refsi_m1",
+        "CA_EXTERNAL_MUX_COMPILER_DIRS": "${sourceDir}/../refsi_m1",
+        "GIT_CLANG_FORMAT_INCLUDED": true,
+        "args_CLANG_FORMAT_EXECUTABLE": "clang-format",
+        "LLVM_ENABLE_ASSERTIONS": true
+      }
+    },
+    {
+      "name": "osx",
+      "inherits": "base",
+      "cacheVariables": {
+        "CA_LLVM_INSTALL_DIR": "/Users/allen/micromamba/envs/mlir",
+        "RISCV_TOOLCHAIN_DIR": "/Users/allen/micromamba/envs/mlir",
+        "CMAKE_C_COMPILER": "/Users/allen/micromamba/envs/mlir/bin/clang",
+        "CMAKE_CXX_COMPILER": "/Users/allen/micromamba/envs/mlir/bin/clang++",
+        "CMAKE_AR": "/Users/allen/micromamba/envs/mlir/bin/llvm-ar"
+      }
+    },
+    {
+      "name": "linux",
+      "inherits": "base",
+      "cacheVariables": {
+        // TODO
+      }
+    }
+  ]
+}
