@@ -34,7 +34,7 @@ set(NUM_HARTS_FOR_CA_MODE "2" CACHE STRING "Number of used harts for the simulat
 set(HAL_REFSI_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 list(APPEND CMAKE_MODULE_PATH ${HAL_REFSI_SOURCE_DIR}/cmake)
 
-include(CompileKernel)
+# include(CompileKernel)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 string(APPEND CMAKE_C_FLAGS " -fvisibility=hidden")
@@ -43,7 +43,7 @@ string(APPEND CMAKE_CXX_FLAGS " -fvisibility=hidden")
 set_property(GLOBAL APPEND PROPERTY KNOWN_HAL_DEVICES "refsi")
 set_property(GLOBAL PROPERTY HAL_REFSI_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(HAL_REFSI_SOC "G1" CACHE STRING "Name of the RefSi SoC family to target")
+set(HAL_REFSI_SOC "M1" CACHE STRING "Name of the RefSi SoC family to target")
 set_property(CACHE HAL_REFSI_SOC PROPERTY STRINGS "M1;G1")
 
 # Determine the kernel interface to use when compiling clik examples.
@@ -62,7 +62,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../driver PARENT_SCOPE)
 
 include(Bin2H)
 include(BakedFile)
-include(FindCompiler)
+# include(FindCompiler)
 
 # Report a HAL description and device name based on which SoC family has been
 # selected.
@@ -85,10 +85,10 @@ else()
   set(TRIPLE "riscv64")
 endif()
 
-find_cc(${TRIPLE})
+# find_cc(${TRIPLE})
 
-if(NOT EXISTS "${RISCV_CC}")
-  message(FATAL_ERROR "Could not find any RISC-V toolchain. Are RISCV_TOOLCHAIN_DIR and/or RISCV_GNU_TOOLCHAIN_DIR configured for an existing toolchain?")
-endif()
+# if(NOT EXISTS "${RISCV_CC}")
+#   message(FATAL_ERROR "Could not find any RISC-V toolchain. Are RISCV_TOOLCHAIN_DIR and/or RISCV_GNU_TOOLCHAIN_DIR configured for an existing toolchain?")
+# endif()
 
 add_subdirectory(source)

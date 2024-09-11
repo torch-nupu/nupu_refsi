@@ -14,14 +14,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-add_subdirectory(loader)
-add_subdirectory(common)
+# add_subdirectory(loader)
+# add_subdirectory(common)
 
 add_library(hal_refsi SHARED
   hal_main.cpp
   refsi_hal.cpp
   refsi_hal_m1.cpp
-  refsi_hal_g1.cpp
+  # refsi_hal_g1.cpp
   refsi_command_buffer.cpp
   riscv_encoder.cpp
 )
@@ -51,7 +51,7 @@ target_include_directories(hal_refsi PUBLIC
 
 target_link_libraries(hal_refsi hal_common dl refsi_common refsidrv)
 
-add_dependencies(hal_refsi refsi_g1_loader_binary)
+# add_dependencies(hal_refsi refsi_g1_loader_binary)
 
 add_baked_data(hal_refsi
     hal_refsi_linker_script

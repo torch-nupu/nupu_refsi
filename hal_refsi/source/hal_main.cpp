@@ -90,10 +90,10 @@ class refsi_hal : public hal::hal_t {
         hal_device.reset(
             new refsi_m1_hal_device(device, &hal_device_info, lock));
         break;
-      case REFSI_G:
-        hal_device.reset(
-            new refsi_g1_hal_device(device, &hal_device_info, lock));
-        break;
+      // case REFSI_G:
+      //   hal_device.reset(
+      //       new refsi_g1_hal_device(device, &hal_device_info, lock));
+      //   break;
     }
     if (!hal_device->initialize(locker)) {
       return nullptr;
