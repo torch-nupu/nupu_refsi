@@ -42,7 +42,11 @@
       "name": "linux",
       "inherits": "base",
       "cacheVariables": {
-        // TODO
+        "CA_LLVM_INSTALL_DIR": "/data/projects/llvm-project/build/install",
+        "RISCV_TOOLCHAIN_DIR": "/data/projects/llvm-project/build/install",
+        "CMAKE_C_COMPILER": "/data/projects/llvm-project/build/install/bin/clang",
+        "CMAKE_CXX_COMPILER": "/data/projects/llvm-project/build/install/bin/clang++",
+        "CMAKE_AR": "/data/projects/llvm-project/build/install/bin/llvm-ar"
       }
     }
   ]

@@ -6,7 +6,14 @@
 git submodule update --init
 
 ln -s $PWD/CMakePresets.json $PWD/oneapi-construction-kit/CMakePresets.json
+
+# optional
 ln -s $PWD/CMakeUserPresets.json $PWD/oneapi-construction-kit/CMakeUserPresets.json
+
+# optional
+pushd oneapi-construction-kit
+git sparse-checkout set --no-cone '/*' '!/examples/refsi'
+popd
 ```
 
 ```bash
@@ -19,5 +26,10 @@ cmake --build build -t all
 test
 
 ```bash
-muxc --list-devices
+./build/bin/muxc --list-devices
+
+# ComputeAorta x86_64
+# ComputeAorta riscv64
+# RefSi M1
+# RefSi M1
 ```
