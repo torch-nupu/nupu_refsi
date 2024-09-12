@@ -19,10 +19,11 @@
         "CA_ENABLE_TESTS": false,
         "CA_CL_ENABLE_OFFLINE_KERNEL_TESTS": false,
         "CA_RISCV_EXTERNAL_HAL_DIR": "${sourceDir}/../hal_refsi",
-        "CA_RISCV_DEVICE": "RefSi M1.*",
+        "CA_RISCV_DEVICE": "RefSi M1",
         "HAL_REFSI_SOC": "M1",
         "CA_MUX_COMPILERS_TO_ENABLE": "host;riscv;huca_refsi",
         "CA_EXTERNAL_MUX_COMPILER_DIRS": "${sourceDir}/../huca_refsi",
+        "CA_BUILD_SPIRV_TOOLS": true,
         "GIT_CLANG_FORMAT_INCLUDED": true,
         "args_CLANG_FORMAT_EXECUTABLE": "clang-format",
         "LLVM_ENABLE_ASSERTIONS": true
