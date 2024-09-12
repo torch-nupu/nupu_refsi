@@ -14,14 +14,35 @@
 #
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-if (NOT TARGET hal_common)
-  set(HAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/hal")
-  if (NOT EXISTS ${HAL_DIR}/include/hal.h)
-    message(FATAL_ERROR "Could not find HAL API headers. Is there a 'hal' checkout at ${HAL_DIR} ?")
+cmake_minimum_required(VERSION 3.0.0)
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  project(refsidrv VERSION 1.0.0)
+
+  if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+    message(FATAL_ERROR "In-tree builds are not supported")
   endif()
-  add_subdirectory(hal)
+
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+  string(APPEND CMAKE_INSTALL_RPATH :$ORIGIN/../lib)
 endif()
 
-if (NOT TARGET refsidrv)
-  add_subdirectory(refsidrv)
-endif()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+string(APPEND CMAKE_C_FLAGS " -fvisibility=hidden")
+string(APPEND CMAKE_CXX_FLAGS " -fvisibility=hidden")
+
+set(REFSIDRV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set_property(GLOBAL PROPERTY REFSIDRV_DIR "${REFSIDRV_SOURCE_DIR}")
+list(APPEND CMAKE_MODULE_PATH ${REFSIDRV_SOURCE_DIR}/cmake)
+
+add_subdirectory(external)
+add_subdirectory(source)
+
+set(REFSIDRV_M1_ISA RV64GCVZbc)
+target_compile_definitions(refsidrv PRIVATE -DREFSI_M1_ISA="${REFSIDRV_M1_ISA}")
+set_property(GLOBAL PROPERTY REFSIDRV_M1_ISA "${REFSIDRV_M1_ISA}")
+
+set(REFSIDRV_SIM_MAX_HARTS "64" CACHE STRING "Maximum number of harts that can be simulated for RefSi cores")
+target_compile_definitions(refsidrv PRIVATE -DREFSI_SIM_MAX_HARTS=${REFSIDRV_SIM_MAX_HARTS})
