@@ -248,10 +248,10 @@ bool refsi_m1_hal_device::kernel_exec(hal::hal_program_t program,
   if (hal_debug()) {
     fprintf(stderr,
             "refsi_hal_device::kernel_exec(kernel=0x%08lx, num_args=%d, "
-            "global=<%ld:%ld:%ld>, local=<%ld:%ld:%ld>)\n",
+            "global=<%ld:%ld:%ld>, local=<%ld:%ld:%ld>), work_dim=%d\n",
             kernel_wrapper->symbol, num_args, nd_range->global[0],
             nd_range->global[1], nd_range->global[2], nd_range->local[0],
-            nd_range->local[1], nd_range->local[2]);
+            nd_range->local[1], nd_range->local[2], work_dim);
   }
 
   // Fill the execution state and work-group info structs.
@@ -313,6 +313,27 @@ bool refsi_m1_hal_device::kernel_exec(hal::hal_program_t program,
   packed_args.resize(packer.size());
   memcpy(packed_args.data(), packer.data(), packer.size());
   alignBuffer(packed_args, sizeof(uint64_t));
+
+  if (hal_debug()) {
+    fprintf(stderr,
+            "dump exec state:\n"
+            "  wg.group_id=<%ld:%ld:%ld>\n"
+            "  wg.num_groups=<%ld:%ld:%ld>\n"
+            "  wg.global_offset=<%ld:%ld:%ld>\n"
+            "  wg.local_size=<%ld:%ld:%ld>\n"
+            "  wg.num_dim=%d\n"
+            "  wg.num_groups_per_call=<%ld:%ld:%ld>\n"
+            "  local_id=<%d:%d:%d>\n"
+            "  kernel_entry=0x%08lx\n"
+            "  thread_id=0x%d\n",
+            wg.group_id[0], wg.group_id[1], wg.group_id[2],
+            wg.num_groups[0], wg.num_groups[1], wg.num_groups[2],
+            wg.global_offset[0], wg.global_offset[1], wg.global_offset[2],
+            wg.local_size[0], wg.local_size[1], wg.local_size[2], wg.num_dim,
+            wg.num_groups_per_call[0], wg.num_groups_per_call[1], wg.num_groups_per_call[2],
+            exec.local_id[0], exec.local_id[1], exec.local_id[2],
+            exec.kernel_entry, exec.thread_id);
+  }
 
   // Pack work-group scheduling info.
   uint32_t exec_offset = packed_args.size();

@@ -143,6 +143,13 @@ refsi_result RefSiAccelerator::runKernelSlice(
     size_t num_active_harts = std::min(instances_left, (size_t)num_harts);
     sim->set_max_active_harts(num_active_harts);
 
+    if (soc.getDebug()) {
+      fprintf(
+          stderr,
+          "[ACC] num_instances=%ld, instances_left=%ld, num_active_harts=%ld\n",
+          num_instances, instances_left, num_active_harts);
+    }
+
     // Set the per-hart state for the current 'hart group'.
     for (size_t j = 0; j < num_active_harts; j++) {
       const hart_state_entry &hart_entry(hart_data[j]);
