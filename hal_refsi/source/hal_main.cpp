@@ -19,7 +19,6 @@
 #include "hal_riscv_common.h"
 #include "linker_script.h"
 #include "refsi_hal.h"
-#include "refsi_hal_g1.h"
 #include "refsi_hal_m1.h"
 #include "refsidrv/refsidrv.h"
 
@@ -51,8 +50,6 @@ class refsi_hal : public hal::hal_t {
   bool initialized = false;
 #if defined(HAL_REFSI_TARGET_M1)
   refsi_device_family family = REFSI_M;
-#elif defined(HAL_REFSI_TARGET_G1)
-  refsi_device_family family = REFSI_G;
 #else
 #error The RefSi SoC family to target is undefined. Please set HAL_REFSI_SOC when building hal_refsi.
 #endif
@@ -90,10 +87,6 @@ class refsi_hal : public hal::hal_t {
         hal_device.reset(
             new refsi_m1_hal_device(device, &hal_device_info, lock));
         break;
-      // case REFSI_G:
-      //   hal_device.reset(
-      //       new refsi_g1_hal_device(device, &hal_device_info, lock));
-      //   break;
     }
     if (!hal_device->initialize(locker)) {
       return nullptr;
@@ -114,9 +107,6 @@ class refsi_hal : public hal::hal_t {
         return nullptr;
       case REFSI_M:
         return "RefSi M1";
-      case REFSI_G:
-        return hal_device_info.word_size == 32 ? "RefSi G1 RV32"
-                                               : "RefSi G1 RV64";
     }
   }
 

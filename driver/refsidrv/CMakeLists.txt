@@ -40,13 +40,6 @@ list(APPEND CMAKE_MODULE_PATH ${REFSIDRV_SOURCE_DIR}/cmake)
 add_subdirectory(external)
 add_subdirectory(source)
 
-set(REFSIDRV_G1_ISA RV64GCV)
-if(DEFINED HAL_DESCRIPTION)
-  set(REFSIDRV_G1_ISA ${HAL_DESCRIPTION})
-endif()
-target_compile_definitions(refsidrv PRIVATE -DREFSI_G1_ISA="${REFSIDRV_G1_ISA}")
-set_property(GLOBAL PROPERTY REFSIDRV_G1_ISA "${REFSIDRV_G1_ISA}")
-
 set(REFSIDRV_M1_ISA RV64GCVZbc)
 target_compile_definitions(refsidrv PRIVATE -DREFSI_M1_ISA="${REFSIDRV_M1_ISA}")
 set_property(GLOBAL PROPERTY REFSIDRV_M1_ISA "${REFSIDRV_M1_ISA}")

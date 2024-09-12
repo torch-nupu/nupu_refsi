@@ -31,7 +31,6 @@ add_library(refsidrv SHARED
   refsidrv/refsi_command_processor.cpp
   refsidrv/refsi_device.cpp
   refsidrv/refsi_device_m.cpp
-  refsidrv/refsi_device_g.cpp
   refsidrv/refsi_memory.cpp
   refsidrv/refsi_memory_window.cpp
   refsidrv/refsi_perf_counters.cpp

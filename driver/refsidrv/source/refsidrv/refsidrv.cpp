@@ -20,16 +20,13 @@
 
 #include "refsidrv/refsi_device.h"
 #include "refsidrv/refsi_device_m.h"
-#include "refsidrv/refsi_device_g.h"
 
 static refsi_device_t global_m1_device = nullptr;
-static refsi_device_t global_g1_device = nullptr;
 static bool initialized = false;
 
 refsi_result refsiInitialize() {
   if (!initialized) {
     global_m1_device = nullptr;
-    global_g1_device = nullptr;
     initialized = true;
   }
   return refsi_success;
@@ -38,9 +35,6 @@ refsi_result refsiInitialize() {
 refsi_result refsiTerminate() {
   if (global_m1_device) {
     refsiShutdownDevice(global_m1_device);
-  }
-  if (global_g1_device) {
-    refsiShutdownDevice(global_g1_device);
   }
   return refsi_success;
 }
@@ -61,16 +55,6 @@ refsi_device_t refsiOpenDevice(refsi_device_family family) {
       }
     }
     return global_m1_device;
-  case REFSI_G:
-    if (!global_g1_device) {
-      RefSiGDevice::getDefaultConfig(isa, vlen);
-      global_g1_device = new RefSiGDevice(isa, vlen);
-      if (global_g1_device->initialize() != refsi_success) {
-        delete global_g1_device;
-        global_g1_device = nullptr;
-      }
-    }
-    return global_g1_device;
   }
   return nullptr;
 }
@@ -80,9 +64,6 @@ refsi_result refsiShutdownDevice(refsi_device_t device) {
     if (device == global_m1_device) {
       delete device;
       global_m1_device = nullptr;
-    } else if (device == global_g1_device) {
-      delete device;
-      global_g1_device = nullptr;
     } else {
       return refsi_failure;
     }
@@ -204,8 +185,10 @@ refsi_result refsiExecuteKernel(refsi_device_t device,
   } else if (device->getFamily() != refsi_soc_family::g) {
     return refsi_not_supported;
   }
-  RefSiGDevice *g_device = (RefSiGDevice *)device;
-  return g_device->executeKernel(entry_fn_addr, num_harts);
+  // NOTE: g1 is removed
+  // RefSiGDevice *g_device = (RefSiGDevice *)device;
+  // return g_device->executeKernel(entry_fn_addr, num_harts);
+  return refsi_not_supported;
 }
 
 refsi_result refsiDecodeCMPCommand(uint64_t header,
