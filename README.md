@@ -33,3 +33,11 @@ test
 # RefSi M1
 # RefSi M1
 ```
+
+test OpenCL example: clVectorAddition
+
+```bash
+CA_HAL_DEBUG=1 OCL_ICD_FILENAMES=build/lib/libCL.so build/bin/clVectorAddition
+
+# Example ran successfully, exiting
+```
