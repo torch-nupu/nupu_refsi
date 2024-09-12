@@ -1,0 +1,47 @@
+name: "build"
+
+on:
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+  # push:
+  #   branches: [main]
+
+jobs:
+  build:
+    # runs-on: ubuntu-20.04
+    # runs-on: ubuntu-22.04
+    # runs-on: ubuntu-24.04
+    runs-on: self-hosted
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          clean: true
+
+      # TODO: is it enough ?
+      - name: clean_dir
+        run: |
+          rm -f $PWD/build
+
+      - name: prepare
+        run: |
+          git submodule update --init --depth 1
+          rm -f $PWD/oneapi-construction-kit/CMakePresets.json
+          ln -s $PWD/CMakePresets.json $PWD/oneapi-construction-kit/CMakePresets.json
+
+      - name: build
+        run: |
+          cmake --preset linux -Soneapi-construction-kit -Bbuild
+          cmake --build build -t all
+
+      - name: test example
+        run: |
+          OCL_ICD_VENDORS=$PWD/build/share/OpenCL/vendors \
+            CA_HAL_DEBUG=1 REFSI_DEBUG=1 \
+              build/bin/clVectorAddition --platform "ComputeAorta" --device "RefSi M1"
+
+      # TODO: enable UnitCL
