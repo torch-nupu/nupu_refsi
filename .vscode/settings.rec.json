@@ -1,0 +1,23 @@
+{
+    "cmake.sourceDirectory": "${workspaceFolder}/oneapi-construction-kit",
+    "terminal.integrated.env.linux": {
+        "EXT_PATH": "${workspaceFolder}/build/bin",
+        "OCL_ICD_VENDORS": "${workspaceFolder}/build/share/OpenCL/vendors",
+        "REFSI_DEBUG": "1",
+        "CA_HAL_DEBUG": "1",
+        "CA_PROFILE_LEVEL": "3",
+        "CA_RISCV_DUMP_ASM": "1",
+        "CA_RISCV_DUMP_IR": "1",
+    },
+    "terminal.integrated.env.osx": {
+        "EXT_PATH": "${workspaceFolder}/build/bin",
+        "OCL_ICD_VENDORS": "${workspaceFolder}/build/share/OpenCL/vendors",
+        "REFSI_DEBUG": "1",
+        "CA_HAL_DEBUG": "1",
+        "CA_PROFILE_LEVEL": "3",
+        "CA_RISCV_DUMP_ASM": "1",
+        "CA_RISCV_DUMP_IR": "1",
+    },
+    "files.trimTrailingWhitespace": false,
+    "files.insertFinalNewline": true,
+}
