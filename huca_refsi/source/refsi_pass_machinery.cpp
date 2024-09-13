@@ -100,9 +100,20 @@ llvm::ModulePassManager RefSiM1PassMachinery::getLateTargetPasses() {
 
   if (env_debug_prefix) {
     std::string dump_ir_env_name = *env_debug_prefix + "_DUMP_IR";
+    const std::string dump_ir_file_env_name =
+        *env_debug_prefix + "_DUMP_IR_FILE";
+    char *dump_ir_file = std::getenv(dump_ir_file_env_name.c_str());
     if (std::getenv(dump_ir_env_name.c_str())) {
-      PM.addPass(compiler::utils::SimpleCallbackPass(
-          [](llvm::Module &m) { m.print(llvm::dbgs(), /*AAW*/ nullptr); }));
+      PM.addPass(
+          compiler::utils::SimpleCallbackPass([dump_ir_file](llvm::Module &m) {
+            if (dump_ir_file) {
+              std::error_code EC;
+              llvm::raw_fd_ostream dest(dump_ir_file, EC);
+              m.print(dest, /*AAW*/ nullptr);
+            } else {
+              m.print(llvm::dbgs(), /*AAW*/ nullptr);
+            }
+          }));
     }
   }
 
@@ -170,14 +181,26 @@ llvm::ModulePassManager RefSiM1PassMachinery::getLateTargetPasses() {
   if (env_debug_prefix) {
     // With all passes scheduled, add a callback pass to view the
     // assembly/object file, if requested.
-    std::string dump_asm_env_name = *env_debug_prefix + "_DUMP_ASM";
+    const std::string dump_asm_env_name = *env_debug_prefix + "_DUMP_ASM";
+    const std::string dump_asm_file_env_name =
+        *env_debug_prefix + "_DUMP_ASM_FILE";
+    char *dump_asm_file = std::getenv(dump_asm_file_env_name.c_str());
     if (std::getenv(dump_asm_env_name.c_str())) {
-      PM.addPass(compiler::utils::SimpleCallbackPass([this](llvm::Module &m) {
-        // Clone the module so we leave it in the same state after we compile.
-        auto cloned_m = llvm::CloneModule(m);
-        compiler::emitCodeGenFile(*cloned_m, TM, llvm::outs(),
-                                  /*create_assembly*/ true);
-      }));
+      PM.addPass(compiler::utils::SimpleCallbackPass(
+          [this, dump_asm_file](llvm::Module &m) {
+            // Clone the module so we leave it in the same state after we
+            // compile.
+            auto cloned_m = llvm::CloneModule(m);
+            if (dump_asm_file) {
+              std::error_code EC;
+              llvm::raw_fd_ostream dest(dump_asm_file, EC);
+              compiler::emitCodeGenFile(*cloned_m, TM, dest,
+                                        /*create_assembly*/ true);
+            } else {
+              compiler::emitCodeGenFile(*cloned_m, TM, llvm::outs(),
+                                        /*create_assembly*/ true);
+            }
+          }));
     }
   }
 
