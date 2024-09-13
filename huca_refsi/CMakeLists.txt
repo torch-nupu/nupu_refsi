@@ -35,6 +35,7 @@ if(CA_RUNTIME_COMPILER_ENABLED)
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/refsi_wrapper_pass.h
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/info.h
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/module.h
+      ${CMAKE_CURRENT_SOURCE_DIR}/source/huca_dummy_pass.cpp
   )
 
   add_ca_library(compiler-refsi-m1 STATIC ${REFSI_M1_SOURCES})

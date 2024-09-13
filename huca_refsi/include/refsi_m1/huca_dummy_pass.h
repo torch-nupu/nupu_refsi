@@ -14,14 +14,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-// This is a simplified version of LLVMs llvm/lib/Passes/PassRegistry.def. It
-// outlines all RefSi M1 specific passes.
+#ifndef REFSI_M1_HUCA_DUMMY_PASS
+#define REFSI_M1_HUCA_DUMMY_PASS
 
-#ifndef MODULE_PASS
-#define MODULE_PASS(NAME, CREATE_PASS)
-#endif
+#include <llvm/IR/PassManager.h>
 
-MODULE_PASS("refsi-wrapper", refsi_m1::RefSiM1WrapperPass())
-MODULE_PASS("huca-dummy", refsi_m1::HucaDummyPass())
+namespace refsi_m1 {
+class HucaDummyPass final : public llvm::PassInfoMixin<HucaDummyPass> {
+ public:
+  llvm::PreservedAnalyses run(llvm::Module &, llvm::ModuleAnalysisManager &);
+};
 
-#undef MODULE_PASS
+}  // namespace refsi_m1
+
+#endif  // REFSI_M1_HUCA_DUMMY_PASS

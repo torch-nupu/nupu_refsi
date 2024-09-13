@@ -38,6 +38,8 @@
 #include <riscv/ir_to_builtins_pass.h>
 #include <vecz/pass.h>
 
+#include "refsi_m1/huca_dummy_pass.h"
+
 namespace refsi_m1 {
 
 RefSiM1PassMachinery::RefSiM1PassMachinery(
@@ -153,6 +155,8 @@ llvm::ModulePassManager RefSiM1PassMachinery::getLateTargetPasses() {
   if (hal_name.ends_with("Tutorial")) {
     PM.addPass(RefSiM1WrapperPass());
   }
+
+  PM.addPass(HucaDummyPass());
 
   PM.addPass(compiler::utils::AddMetadataPass<
              compiler::utils::VectorizeMetadataAnalysis,
