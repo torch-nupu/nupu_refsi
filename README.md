@@ -1,4 +1,4 @@
-# refsi_huca
+# huca_refsi
 
 ## How to build
 
@@ -26,7 +26,7 @@ cmake --build build -t all
 test
 
 ```bash
-./build/bin/muxc --list-devices
+build/bin/muxc --list-devices
 
 # ComputeAorta x86_64
 # ComputeAorta riscv64
