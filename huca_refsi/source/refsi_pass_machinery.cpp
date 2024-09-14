@@ -179,6 +179,25 @@ llvm::ModulePassManager RefSiM1PassMachinery::getLateTargetPasses() {
       compiler::utils::ManualTypeLegalizationPass()));
 
   if (env_debug_prefix) {
+    std::string dump_ir_env_name = *env_debug_prefix + "_DUMP_IR";
+    const std::string dump_ir_file_env_name =
+        *env_debug_prefix + "_DUMP_FINAL_IR_FILE";
+    char *dump_ir_file = std::getenv(dump_ir_file_env_name.c_str());
+    if (std::getenv(dump_ir_env_name.c_str())) {
+      PM.addPass(
+          compiler::utils::SimpleCallbackPass([dump_ir_file](llvm::Module &m) {
+            if (dump_ir_file) {
+              std::error_code EC;
+              llvm::raw_fd_ostream dest(dump_ir_file, EC);
+              m.print(dest, /*AAW*/ nullptr);
+            } else {
+              m.print(llvm::dbgs() << "Final IR:\n", /*AAW*/ nullptr);
+            }
+          }));
+    }
+  }
+
+  if (env_debug_prefix) {
     // With all passes scheduled, add a callback pass to view the
     // assembly/object file, if requested.
     const std::string dump_asm_env_name = *env_debug_prefix + "_DUMP_ASM";
