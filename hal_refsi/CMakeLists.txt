@@ -55,3 +55,6 @@ set_property(GLOBAL PROPERTY HAL_REFSI_DEVICE_NAME "RefSi M1")
 set(TRIPLE "riscv64")
 
 add_subdirectory(source)
+
+include(${ComputeAorta_SOURCE_DIR}/source/cl/cmake/AddCACL.cmake)
+add_subdirectory(examples)
