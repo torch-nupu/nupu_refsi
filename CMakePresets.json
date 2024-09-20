@@ -52,6 +52,17 @@
         "CMAKE_CXX_COMPILER": "/data/projects/llvm-project/build/install/bin/clang++",
         "CMAKE_AR": "/data/projects/llvm-project/build/install/bin/llvm-ar"
       }
+    },
+    {
+      "name": "linux_nu",
+      "inherits": "base",
+      "cacheVariables": {
+        "CA_LLVM_INSTALL_DIR": "/data/allen/llvm-project/build/install",
+        "RISCV_TOOLCHAIN_DIR": "/data/allen/llvm-project/build/install",
+        "CMAKE_C_COMPILER": "/data/allen/llvm-project/build/install/bin/clang",
+        "CMAKE_CXX_COMPILER": "/data/allen/llvm-project/build/install/bin/clang++",
+        "CMAKE_AR": "/data/allen/llvm-project/build/install/bin/llvm-ar"
+      }
     }
   ]
 }
