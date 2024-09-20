@@ -2,3 +2,7 @@
 	path = oneapi-construction-kit
 	url = git@github.com:nuway-ai/oneapi-construction-kit.git
 	branch = dev
+[submodule "driver/external/riscv-isa-sim"]
+	path = driver/external/riscv-isa-sim
+	url = git@github.com:nuway-ai/riscv-isa-sim.git
+	branch = dev_refsi

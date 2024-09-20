@@ -30,8 +30,8 @@ class RefSiM1Target final : public riscv::RiscvTarget {
  public:
   RefSiM1Target(const compiler::Info *compiler_info,
                 const riscv::hal_device_info_riscv_t *hal_device_info,
-                compiler::Context *context, compiler::NotifyCallbackFn callback)
-      : riscv::RiscvTarget(compiler_info, hal_device_info, context, callback) {}
+                compiler::Context *context,
+                compiler::NotifyCallbackFn callback);
 
   /// @see BaseTarget::createModule
   std::unique_ptr<compiler::Module> createModule(uint32_t &num_errors,

@@ -36,6 +36,7 @@ if(CA_RUNTIME_COMPILER_ENABLED)
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/info.h
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/module.h
       ${CMAKE_CURRENT_SOURCE_DIR}/source/huca_dummy_pass.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/source/target.cpp
   )
 
   add_ca_library(compiler-refsi-m1 STATIC ${REFSI_M1_SOURCES})
@@ -53,7 +54,7 @@ if(CA_RUNTIME_COMPILER_ENABLED)
     compiler-riscv-utils
     compiler-pipeline
     compiler-binary-metadata
-    compiler-linker-utils      
+    compiler-linker-utils
     refsidrv
     compiler-base
     LLVMCoverage LLVMDebugInfoCodeView LLVMExecutionEngine
