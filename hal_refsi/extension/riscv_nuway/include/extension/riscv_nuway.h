@@ -14,27 +14,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#include <compiler/utils/attributes.h>
-#include <compiler/utils/pass_functions.h>
-#include <compiler/utils/scheduling.h>
-#include <llvm/IR/DebugInfoMetadata.h>
-#include <llvm/IR/IRBuilder.h>
-#include <llvm/IR/Module.h>
-#include <refsi_m1/huca_dummy_pass.h>
+#pragma once
 
-#include <iostream>
+#include <extension/extension.h>
 
-using namespace llvm;
+namespace extension {
 
-namespace refsi_m1 {
+class riscv_nuway final : public extension {
+ public:
+  riscv_nuway();
+};
 
-llvm::PreservedAnalyses HucaDummyPass::run(llvm::Module &M,
-                                           llvm::ModuleAnalysisManager &) {
-  // llvm::dbgs() << "--- start HucaDummyPass\n";
-  (void)M;
-  // M.print(llvm::dbgs(), nullptr);
-  // llvm::dbgs() << "--- fin HucaDummyPass\n";
-
-  return PreservedAnalyses::all();
-}
-}  // namespace refsi_m1
+}  // namespace extension

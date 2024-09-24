@@ -42,6 +42,7 @@ set_property(GLOBAL PROPERTY HAL_REFSI_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(HAL_REFSI_SOC "M1" CACHE STRING "Name of the RefSi SoC family to target")
 set_property(CACHE HAL_REFSI_SOC PROPERTY STRINGS "M1")
 
+add_subdirectory(extension)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../driver ${CMAKE_CURRENT_BINARY_DIR}/driver)
 
 include(Bin2H)

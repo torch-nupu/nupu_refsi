@@ -19,6 +19,7 @@
 #include <llvm/ADT/Statistic.h>
 #include <llvm/Target/TargetMachine.h>
 #include <refsi_m1/module.h>
+#include <refsi_m1/refsi_cl_builtin_info.h>
 #include <refsi_m1/refsi_mux_builtin_info.h>
 #include <refsi_m1/refsi_pass_machinery.h>
 #include <refsi_m1/target.h>
@@ -40,9 +41,8 @@ RefSiM1Module::createPassMachinery() {
       getTarget().getCompilerInfo()->device_info);
 
   auto Callback = [Builtins](const llvm::Module &) {
-    return compiler::utils::BuiltinInfo(
-        std::make_unique<RefSiM1BIMuxInfo>(),
-        compiler::utils::createCLBuiltinInfo(Builtins));
+    return compiler::utils::BuiltinInfo(std::make_unique<RefSiM1BIMuxInfo>(),
+                                        createRefSiM1CLBuiltinInfo(Builtins));
   };
   llvm::LLVMContext &Ctx = Builtins->getContext();
   return std::make_unique<RefSiM1PassMachinery>(

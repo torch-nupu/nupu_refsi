@@ -37,13 +37,20 @@ jobs:
 
       - name: build
         run: |
-          cmake --preset linux -Soneapi-construction-kit -Bbuild
+          cmake --preset linux_nu -Soneapi-construction-kit -Bbuild
           cmake --build build -t all
 
       - name: test example
         run: |
           OCL_ICD_VENDORS=$PWD/build/share/OpenCL/vendors \
-            CA_HAL_DEBUG=1 REFSI_DEBUG=1 \
+            CA_HAL_DEBUG=1 REFSI_DEBUG=1 CA_RISCV_DUMP_ASM=1 CA_RISCV_DUMP_IR=1 \
               build/bin/clVectorAddition --platform "ComputeAorta" --device "RefSi M1"
+
+      - name: test example with xnu
+        run: |
+          OCL_ICD_VENDORS=$PWD/build/share/OpenCL/vendors \
+            CA_HAL_DEBUG=1 REFSI_DEBUG=1 CA_RISCV_DUMP_ASM=1 CA_RISCV_DUMP_IR=1 \
+              REFSI_LLVM_ENABLE_NU=1 \
+                build/bin/cl_huca_nop --platform "ComputeAorta" --device "RefSi M1"
 
       # TODO: enable UnitCL
