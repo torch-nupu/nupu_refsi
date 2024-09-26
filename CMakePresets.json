@@ -19,6 +19,7 @@
         "CA_ENABLE_TESTS": false,
         "CA_CL_ENABLE_OFFLINE_KERNEL_TESTS": false,
         "CA_RISCV_EXTERNAL_HAL_DIR": "${sourceDir}/../hal_refsi",
+        "CA_CL_PLATFORM_NAME": "ComputeAortaOpenCL",
         "CA_RISCV_DEVICE": "RefSi M1",
         "HAL_REFSI_SOC": "M1",
         "CA_MUX_COMPILERS_TO_ENABLE": "host;compiler_refsi",

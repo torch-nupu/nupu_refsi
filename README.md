@@ -23,6 +23,13 @@ cmake --preset linux -Soneapi-construction-kit -Bbuild
 cmake --build build -t all
 ```
 
+Build with customized platform name
+
+```bash
+cmake --preset linux_nu -DCA_CL_PLATFORM_NAME=HucaOpenCL -Soneapi-construction-kit -Bbuild
+cmake --build build -t all
+```
+
 test
 
 ```bash
