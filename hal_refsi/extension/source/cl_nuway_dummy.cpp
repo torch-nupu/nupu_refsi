@@ -14,15 +14,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#pragma once
+#include <extension/cl_nuway_dummy.h>
 
-#include <extension/extension.h>
-
-namespace extension {
-
-class riscv_nuway final : public extension {
- public:
-  riscv_nuway();
-};
-
-}  // namespace extension
+extension::cl_nuway_dummy::cl_nuway_dummy()
+    : extension("cl_nuway_dummy",
+                usage_category::DEVICE CA_CL_EXT_VERSION(1, 0, 0)) {}
