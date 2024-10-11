@@ -37,6 +37,9 @@ struct RefSiM1Info : riscv::RiscvInfo {
     static std::once_flag compilers_initialized;
     std::call_once(compilers_initialized, [] {
       for (auto &device_info : riscv::GetDeviceInfosArray()) {
+        if (!device_info.is_valid()) {
+          continue;
+        }
         // RefSiM1 is expected as a GPU
         device_info.device_type = mux_device_type_gpu_discrete;
         auto *riscv_hal_device_info =

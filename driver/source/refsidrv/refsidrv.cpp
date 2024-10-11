@@ -21,21 +21,11 @@
 #include "refsidrv/refsi_device.h"
 #include "refsidrv/refsi_device_m.h"
 
-static refsi_device_t global_m1_device = nullptr;
-static bool initialized = false;
-
 refsi_result refsiInitialize() {
-  if (!initialized) {
-    global_m1_device = nullptr;
-    initialized = true;
-  }
   return refsi_success;
 }
 
 refsi_result refsiTerminate() {
-  if (global_m1_device) {
-    refsiShutdownDevice(global_m1_device);
-  }
   return refsi_success;
 }
 
@@ -47,26 +37,19 @@ refsi_device_t refsiOpenDevice(refsi_device_family family) {
     break;
   case REFSI_DEFAULT:
   case REFSI_M:
-    if (!global_m1_device) {
-      global_m1_device = new RefSiMDevice();
-      if (global_m1_device->initialize() != refsi_success) {
-        delete global_m1_device;
-        global_m1_device = nullptr;
-      }
+    refsi_device_t m1_device = new RefSiMDevice();
+    if (m1_device->initialize() != refsi_success) {
+      delete m1_device;
+      m1_device = nullptr;
     }
-    return global_m1_device;
+    return m1_device;
   }
   return nullptr;
 }
 
 refsi_result refsiShutdownDevice(refsi_device_t device) {
   if (device) {
-    if (device == global_m1_device) {
-      delete device;
-      global_m1_device = nullptr;
-    } else {
-      return refsi_failure;
-    }
+    delete device;
     return refsi_success;
   } else {
     return refsi_failure;

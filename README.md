@@ -48,3 +48,9 @@ CA_HAL_DEBUG=1 OCL_ICD_FILENAMES=build/lib/libCL.so build/bin/clVectorAddition
 
 # Example ran successfully, exiting
 ```
+
+example to run with multiple devices:
+
+```bash
+NUM_HUCA_GPUS=8 OCL_ICD_FILENAMES=build/lib/libCL.so ./build/bin/cl_huca_multi_devices
+```

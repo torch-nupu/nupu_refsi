@@ -42,6 +42,15 @@ bool queryMemRange(refsi_device_t device, refsi_memory_map_kind kind,
   return false;
 }
 
+uint32_t getNumDevices() {
+  if (const char *num_devices_env = std::getenv("NUM_HUCA_GPUS")) {
+    if (uint32_t num_devices = atoi(num_devices_env)) {
+      return num_devices;
+    }
+  }
+  return 1;
+}
+
 class refsi_hal : public hal::hal_t {
  protected:
   hal::hal_info_t hal_info;
@@ -71,9 +80,6 @@ class refsi_hal : public hal::hal_t {
   // request the creation of a new hal
   hal::hal_device_t *device_create(uint32_t index) override {
     refsi_locker locker(lock);
-    if (!initialized || (index > 0)) {
-      return nullptr;
-    }
     refsi_device_t device = refsiOpenDevice(family);
     if (!device) {
       return nullptr;
@@ -114,7 +120,7 @@ class refsi_hal : public hal::hal_t {
     constexpr static uint32_t implemented_api_version = 6;
     static_assert(implemented_api_version == hal_t::api_version,
                   "Implemented API version for RefSi HAL does not match hal.h");
-    hal_info.num_devices = 1;
+    hal_info.num_devices = getNumDevices();
     hal_info.api_version = implemented_api_version;
     if (refsi_success != refsiInitialize()) {
       hal_info.num_devices = 0;
