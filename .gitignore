@@ -3,3 +3,8 @@
 .cache
 
 CMakeUserPresets.json
+
+# symbol link
+oneapi-construction-kit
+ock
+OCK

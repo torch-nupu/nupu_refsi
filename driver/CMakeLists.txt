@@ -40,7 +40,11 @@ list(APPEND CMAKE_MODULE_PATH ${REFSIDRV_SOURCE_DIR}/cmake)
 add_subdirectory(external)
 add_subdirectory(source)
 
-set(REFSIDRV_M1_ISA RV64GCV_Zbc_Zfh)
+# example: RV64GCV_Zbc_Zfh, RV64IMAFD_V_Zbc_Zfh
+if(NOT REFSIDRV_M1_ISA)
+  set(REFSIDRV_M1_ISA "RV64GCV_Zbc_Zfh")
+endif()
+
 target_compile_definitions(refsidrv PRIVATE -DREFSI_M1_ISA="${REFSIDRV_M1_ISA}")
 set_property(GLOBAL PROPERTY REFSIDRV_M1_ISA "${REFSIDRV_M1_ISA}")
 

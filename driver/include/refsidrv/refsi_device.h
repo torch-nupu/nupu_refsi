@@ -43,7 +43,6 @@ enum refsi_device_constants {
   num_global_perf_counters = REFSI_NUM_GLOBAL_PERF_COUNTERS,
   num_per_hart_perf_counters = REFSI_NUM_PER_HART_PERF_COUNTERS
 };
-#define REFSI_ISA "RV64GCVZbc"
 
 /// @brief List of memory regions accessible to a RefSi device. This includes
 /// different kinds of memory such as TCIM, TCDM, DRAM as well as memory-mapped
@@ -99,7 +98,7 @@ struct RefSiDevice {
   RefSiMemoryController &getMemory();
 
   /// @brief Return the lock used to protect device state.
-  std::mutex & getLock() { return mutex; }
+  std::mutex &getLock() { return mutex; }
 
   /// @brief Whether debug output is enabled or not.
   bool getDebug() const { return debug; }
