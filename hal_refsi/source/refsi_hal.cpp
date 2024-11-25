@@ -21,6 +21,7 @@
 
 #include "device/device_if.h"
 #include "device/memory_map.h"
+#include "tracer/tracer.h"
 
 refsi_hal_device::refsi_hal_device(refsi_device_t device,
                                    riscv::hal_device_info_riscv_t *info,
@@ -48,6 +49,8 @@ refsi_hal_device::refsi_hal_device(refsi_device_t device,
 refsi_hal_device::~refsi_hal_device() {}
 
 refsi_hal_kernel *refsi_hal_program::find_kernel(const char *name) {
+  ZoneScopedN("refsi_hal_program::find_kernel");
+  ZoneTextF(name);
   std::string name_str(name);
   auto it = kernels.find(name_str);
   if (it != kernels.end()) {
@@ -66,6 +69,7 @@ refsi_hal_kernel *refsi_hal_program::find_kernel(const char *name) {
 
 hal::hal_kernel_t refsi_hal_device::program_find_kernel(
     hal::hal_program_t program, const char *name) {
+  ZoneScopedN("refsi_hal_device::program_find_kernel");
   refsi_locker locker(hal_lock);
   if (program == hal::hal_invalid_program) {
     return hal::hal_invalid_kernel;
@@ -85,6 +89,7 @@ hal::hal_kernel_t refsi_hal_device::program_find_kernel(
 
 hal::hal_program_t refsi_hal_device::program_load(const void *data,
                                                   hal::hal_size_t size) {
+  ZoneScopedN("refsi_hal_device::program_load");
   refsi_locker locker(hal_lock);
   BufferDevice elf_data(data, size);
   std::unique_ptr<ELFProgram> new_program(new ELFProgram());
@@ -98,6 +103,7 @@ hal::hal_program_t refsi_hal_device::program_load(const void *data,
 }
 
 bool refsi_hal_device::program_free(hal::hal_program_t program) {
+  ZoneScopedN("refsi_hal_device::program_free");
   refsi_locker locker(hal_lock);
   if (program == hal::hal_invalid_program) {
     return false;
@@ -273,6 +279,8 @@ void refsi_hal_device::pack_word_arg(std::vector<uint8_t> &packed_data,
 
 hal::hal_addr_t refsi_hal_device::mem_alloc(hal::hal_size_t size,
                                             hal::hal_size_t alignment) {
+  ZoneScopedN("refsi_hal_device::mem_alloc");
+  ZoneTextF("size: %d, alignment: %d", size, alignment);
   refsi_locker locker(hal_lock);
   hal::hal_addr_t alloc_addr = mem_alloc(size, alignment, locker);
   if (hal_debug()) {

@@ -38,7 +38,7 @@ target_include_directories(hal_refsi PUBLIC
     ${HAL_REFSI_SOURCE_DIR}/include
 )
 
-target_link_libraries(hal_refsi hal_common dl refsi_common refsidrv)
+target_link_libraries(hal_refsi hal_common dl refsi_common refsidrv tracer)
 
 add_baked_data(hal_refsi
     hal_refsi_linker_script
