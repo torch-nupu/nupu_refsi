@@ -42,6 +42,9 @@ struct RefSiM1Info : riscv::RiscvInfo {
         }
         // RefSiM1 is expected as a GPU
         device_info.device_type = mux_device_type_gpu_discrete;
+        device_info.num_sub_group_sizes = supported_sub_group_sizes.size();
+        device_info.sub_group_sizes = supported_sub_group_sizes.data();
+
         auto *riscv_hal_device_info =
             static_cast<const riscv::hal_device_info_riscv_t *>(
                 device_info.hal_device_info);
@@ -52,6 +55,9 @@ struct RefSiM1Info : riscv::RiscvInfo {
       add_compiler(&info);
     }
   }
+
+ protected:
+  static constexpr std::array<size_t, 1> supported_sub_group_sizes = {32};
 };
 }  // namespace refsi_m1
 

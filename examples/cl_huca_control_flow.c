@@ -30,13 +30,18 @@
 
 static const char *kernel_source =
     "__attribute__((intel_reqd_sub_group_size(32)))"
-    "__kernel void vector_addition(__global int *src1, __global int *src2,\n"
+    "__kernel void control_flow(__global int *src1, __global int *src2,\n"
     "                              __global int *dst) {\n"
     "  size_t gid = get_global_id(0);\n"
-    "  dst[gid] = src1[gid] + src2[gid];\n"
+    "  if (gid%2) {"
+    "    dst[gid] = src1[gid] + src2[gid];\n"
+    "  }"
+    "  else {"
+    "    dst[gid] = src1[gid] * src2[gid];\n"
+    "  }"
     "}\n";
 
-#define NUM_WORK_ITEMS 64
+#define NUM_WORK_ITEMS 1024
 
 void printUsage(const char *arg0) {
   printf("usage: %s [-h] [--platform <name>] [--device <name>]\n", arg0);
@@ -277,7 +282,7 @@ int main(const int argc, const char **argv) {
   printf(" * Created buffers\n");
 
   /* Create kernel and set arguments */
-  cl_kernel kernel = clCreateKernel(program, "vector_addition", &errcode);
+  cl_kernel kernel = clCreateKernel(program, "control_flow", &errcode);
   IS_CL_SUCCESS(errcode);
   IS_CL_SUCCESS(clSetKernelArg(kernel, 0, sizeof(src1_buffer), &src1_buffer));
   IS_CL_SUCCESS(clSetKernelArg(kernel, 1, sizeof(src2_buffer), &src2_buffer));
@@ -325,7 +330,7 @@ int main(const int argc, const char **argv) {
   // KLOCWORK "UNINIT.STACK.ARRAY.MUST" possible false positive
   // dst is initialized by OpenCL above
   for (size_t i = 0; i < NUM_WORK_ITEMS; ++i) {
-    if (dst[i] != src1[i] + src2[i]) {
+    if (dst[i] != (i%2 ? src1[i] + src2[i] : src1[i] * src2[i])) {
       printf("Result mismatch for index %zu\n", i);
       printf("Got %d, but expected %d\n", dst[i], src1[i] + src2[i]);
       exit(1);
