@@ -36,6 +36,7 @@
       "name": "osx",
       "inherits": "base",
       "cacheVariables": {
+        "REFSI_LLVM_ENABLE_NU": false,
         "CA_LLVM_INSTALL_DIR": "/Users/allen/micromamba/envs/mlir",
         "RISCV_TOOLCHAIN_DIR": "/Users/allen/micromamba/envs/mlir",
         "CMAKE_C_COMPILER": "/Users/allen/micromamba/envs/mlir/bin/clang",
@@ -47,6 +48,7 @@
       "name": "linux",
       "inherits": "base",
       "cacheVariables": {
+        "REFSI_LLVM_ENABLE_NU": false,
         "CA_LLVM_INSTALL_DIR": "/data/projects/llvm-project/build/install",
         "RISCV_TOOLCHAIN_DIR": "/data/projects/llvm-project/build/install",
         "CMAKE_C_COMPILER": "/data/projects/llvm-project/build/install/bin/clang",
@@ -58,6 +60,7 @@
       "name": "linux_nu",
       "inherits": "base",
       "cacheVariables": {
+        "REFSI_LLVM_ENABLE_NU": true,
         "CA_LLVM_INSTALL_DIR": "/data/allen/llvm-project/build/install",
         "RISCV_TOOLCHAIN_DIR": "/data/allen/llvm-project/build/install",
         "CMAKE_C_COMPILER": "/data/allen/llvm-project/build/install/bin/clang",

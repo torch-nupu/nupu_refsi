@@ -23,6 +23,12 @@ if(NOT "${CA_RISCV_DEVICE}" MATCHES "RefSi M1.*")
   return()
 endif()
 
+option(REFSI_LLVM_ENABLE_NU "enable custom riscv `xnu` extension" OFF)
+
+if(REFSI_LLVM_ENABLE_NU)
+  add_definitions("-DREFSI_LLVM_ENABLE_NU")
+endif()
+
 if(CA_RUNTIME_COMPILER_ENABLED)
   set(REFSI_M1_SOURCES
       ${CMAKE_CURRENT_SOURCE_DIR}/source/refsi_mux_builtin_info.cpp

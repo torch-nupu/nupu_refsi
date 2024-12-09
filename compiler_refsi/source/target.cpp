@@ -23,13 +23,10 @@ RefSiM1Target::RefSiM1Target(
     const riscv::hal_device_info_riscv_t *hal_device_info,
     compiler::Context *context, compiler::NotifyCallbackFn callback)
     : riscv::RiscvTarget(compiler_info, hal_device_info, context, callback) {
+#if defined(REFSI_LLVM_ENABLE_NU)
   // TODO: merge with cmake option `REFSIDRV_M1_ISA`
-  if (const char *val = getenv("REFSI_LLVM_ENABLE_NU")) {
-    // TODO: enable by default
-    if (strcmp(val, "1") == 0) {
-      llvm_features += ",+xnu";
-    }
-  }
+  llvm_features += ",+xnu";
+#endif
 }
 
 }  // namespace refsi_m1

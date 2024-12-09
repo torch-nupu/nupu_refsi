@@ -43,6 +43,7 @@ compiler::utils::Builtin RefSiM1CLBuiltinInfo::analyzeBuiltin(
 llvm::Value *RefSiM1CLBuiltinInfo::emitBuiltinInline(
     llvm::Function *Builtin, llvm::IRBuilder<> &B,
     llvm::ArrayRef<llvm::Value *> Args) {
+#if defined(REFSI_LLVM_ENABLE_NU)
   if (Builtin) {
     compiler::utils::NameMangler mangler(&Builtin->getParent()->getContext());
     llvm::StringRef BaseName = mangler.demangleName(Builtin->getName());
@@ -51,6 +52,7 @@ llvm::Value *RefSiM1CLBuiltinInfo::emitBuiltinInline(
       return B.CreateIntrinsic(llvm::Intrinsic::riscv_nu_nop, {}, Args);
     }
   }
+#endif
   return compiler::utils::CLBuiltinInfo::emitBuiltinInline(Builtin, B, Args);
 }
 
