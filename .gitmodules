@@ -6,3 +6,6 @@
 	path = driver/external/riscv-isa-sim
 	url = git@github.com:nuway-ai/riscv-isa-sim.git
 	branch = dev_refsi
+[submodule "examples/OpenCL-CLHPP"]
+	path = examples/OpenCL-CLHPP
+	url = git@github.com:KhronosGroup/OpenCL-CLHPP.git
