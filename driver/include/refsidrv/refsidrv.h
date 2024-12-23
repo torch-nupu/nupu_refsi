@@ -138,6 +138,8 @@ enum refsi_memory_map_kind {
   /// are mapped. This is divided into a per-hardware-thread area and a global
   /// area shared between all units in the RefSi device..
   PERF_COUNTERS = 7,
+  /// @brief Refers to USM host memory area
+  HOST = 8,
 };
 
 /// @brief Represents an entry in the device's memory map.

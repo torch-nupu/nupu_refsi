@@ -74,6 +74,16 @@ bool MemoryDeviceBase::store(reg_t dev_offset, size_t len, const uint8_t *bytes,
 
 ////////////////////////////////////////////////////////////////////////////////
 
+uint8_t *HostRAMDevice::addr_to_mem(reg_t dev_offset, size_t size,
+                                    unit_id_t unit_id) {
+  if ((dev_offset + size) <= mem_size()) {
+    return reinterpret_cast<uint8_t *>(dev_offset);
+  }
+  return nullptr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 RAMDevice::RAMDevice(size_t size) : size(size) {
   data = (uint8_t *)calloc(1, size);
   if (size && !data) {

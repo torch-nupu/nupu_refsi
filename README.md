@@ -1,5 +1,10 @@
 # huca_refsi
 
+This project builds an OpenCL implementation with RISC-V backend based on oneAPI Construction Kit. Key features include:
+
+- Support for RISC-V 64-bit instruction set
+- RefSi M1 device emulator support
+
 ## How to build
 
 ```bash
@@ -17,7 +22,9 @@ popd
 ```
 
 ```bash
+# Linux
 cmake --preset linux -Soneapi-construction-kit -Bbuild
+# macOS
 # cmake --preset osx -Soneapi-construction-kit -Bbuild
 
 cmake --build build -t all
@@ -44,13 +51,12 @@ build/bin/muxc --list-devices
 test OpenCL example: clVectorAddition
 
 ```bash
-CA_HAL_DEBUG=1 OCL_ICD_FILENAMES=build/lib/libCL.so build/bin/clVectorAddition
-
+CA_HAL_DEBUG=1 OCL_ICD_VENDORS=build/share/OpenCL/vendors build/bin/clVectorAddition
 # Example ran successfully, exiting
 ```
 
 example to run with multiple devices:
 
 ```bash
-NUM_HUCA_GPUS=8 OCL_ICD_FILENAMES=build/lib/libCL.so ./build/bin/cl_huca_multi_devices
+NUM_HUCA_GPUS=8 OCL_ICD_VENDORS=build/share/OpenCL/vendors build/bin/cl_huca_multi_devices
 ```

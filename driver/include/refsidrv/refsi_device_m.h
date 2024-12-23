@@ -49,6 +49,7 @@ public:
   std::unique_ptr<RefSiCommandProcessor> cmp;
   RAMDevice *tcdm = nullptr;
   RAMDevice *dram = nullptr;
+  HostRAMDevice *host = nullptr;
   DMADevice *dma_device = nullptr;
   PerfCounterDevice *perf_counter_device = nullptr;
 };

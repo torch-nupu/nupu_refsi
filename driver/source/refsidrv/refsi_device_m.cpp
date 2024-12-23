@@ -27,6 +27,9 @@ RefSiMDevice::RefSiMDevice() : RefSiDevice(refsi_soc_family::m) {
   mem_ctl = std::make_unique<RefSiMemoryController>(*this);
   tcdm = mem_ctl->createMemRange(TCDM, tcdm_base, tcdm_size);
   dram = mem_ctl->createMemRange(DRAM, dram_base, dram_size);
+  auto host_mem = new HostRAMDevice(host_size);
+  mem_ctl->addMemDevice(host_base, host_size, HOST, host_mem);
+  host = host_mem;
   dma_device = new DMADevice(elf_machine::riscv_rv64, dma_io_base,
                              *mem_ctl.get(), debug);
   mem_ctl->addMemDevice(dma_device->get_base(), dma_io_size, KERNEL_DMA_PRIVATE,

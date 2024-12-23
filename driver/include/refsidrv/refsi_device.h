@@ -67,7 +67,11 @@ enum refsi_device_memory_regions {
   /// @brief Base address of the DRAM memory region.
   dram_base = 0x40000000,
   /// @brief Size of the DRAM memory region, in bytes.
-  dram_size = 2 * (1ull << 30)
+  dram_size = 2 * (1ull << 30),
+  /// @brief Base address of the HOST memory region.
+  host_base = 0x100000000,
+  /// @brief Size of the HOST memory region, in bytes.
+  host_size = 1 * (1ull << 50)
 };
 
 /// @brief Lists the different RefSi SoC families.

@@ -52,6 +52,7 @@ struct RefSiMemoryController : public MemoryController {
 private:
   RefSiDevice &soc;
   std::vector<refsi_memory_map_entry> memory_map;
+  HostRAMDevice *host = nullptr;
   RAMDevice *tcdm = nullptr;
   RAMDevice *dram = nullptr;
   DMADevice *dma_device = nullptr;

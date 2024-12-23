@@ -58,15 +58,29 @@ const std::vector<refsi_memory_map_entry> &RefSiDevice::getMemoryMap() const {
 refsi_addr_t RefSiDevice::allocDeviceMemory(size_t size, size_t alignment,
                                             refsi_memory_map_kind kind) {
   RefSiLock lock(mutex);
-  if (kind != DRAM) {
-    return refsi_failure;
+  refsi_addr_t addr;
+
+  switch (kind) {
+    case DRAM:
+      return allocator.alloc(size, alignment);
+    case HOST:
+      addr = (host_base + alignment - 1) & ~(alignment - 1);
+      if (addr + size <= host_base + host_size) {
+        return addr;
+      }
+      return refsi_failure;
+    default:
+      return refsi_failure;
   }
-  return allocator.alloc(size, alignment);
 }
 
 refsi_result RefSiDevice::freeDeviceMemory(refsi_addr_t phys_addr) {
   RefSiLock lock(mutex);
-  allocator.free(phys_addr);
+  if (phys_addr >= host_base && phys_addr < (host_base + host_size)) {
+    // don't need to free host memory
+  } else if (phys_addr >= dram_base && phys_addr < (dram_base + dram_size)) {
+    allocator.free(phys_addr);
+  }
   return refsi_success;
 }
 

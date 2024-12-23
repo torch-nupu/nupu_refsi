@@ -153,6 +153,15 @@ class refsi_hal : public hal::hal_t {
       hal_info.num_devices = 0;
       return;
     }
+    // Query HOST memory region
+    refsi_memory_map_entry host_mem;
+    if (queryMemRange(device, HOST, host_mem)) {
+      // Configure USM capabilities
+      hal_device_info.supports_usm = true;
+      // Save host base address for USM address translation
+      hal_device_info.usm_host_base = host_mem.start_addr;
+      hal_device_info.usm_host_size = host_mem.size;
+    }
     if (queryMemRange(device, PERF_COUNTERS, perf_counters)) {
       populatePerfCounters(num_harts);
     }

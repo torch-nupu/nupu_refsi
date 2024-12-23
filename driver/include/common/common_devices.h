@@ -245,9 +245,9 @@ private:
 
 class RAMDevice : public MemoryDeviceBase {
  public:
-  RAMDevice (size_t size);
+  RAMDevice(size_t size);
   virtual ~RAMDevice() {
-    free(data);
+    if (data) free(data);
   }
 
   uint8_t *contents() { return data; }
@@ -257,6 +257,18 @@ class RAMDevice : public MemoryDeviceBase {
 
  private:
   uint8_t *data;
+  size_t size;
+};
+
+class HostRAMDevice : public MemoryDeviceBase {
+ public:
+  HostRAMDevice(size_t size) : size(size) {}
+
+  size_t mem_size() const override { return size; }
+  uint8_t *addr_to_mem(reg_t dev_offset, size_t size,
+                       unit_id_t unit_id) override;
+
+ private:
   size_t size;
 };
 

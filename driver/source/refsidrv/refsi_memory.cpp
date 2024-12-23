@@ -44,7 +44,12 @@ RefSiMemoryController::getMemoryMap() const {
 
 RAMDevice *RefSiMemoryController::createMemRange(refsi_memory_map_kind kind,
                                                  reg_t address, size_t size) {
-  RAMDevice *mem = new RAMDevice(size);
+  if (kind == HOST) {
+    throw std::runtime_error(
+        "createMemRange should not be used for HOST memory");
+  }
+
+  auto mem = new RAMDevice(size);
   addMemDevice(address, size, kind, mem);
   return mem;
 }
@@ -54,6 +59,20 @@ void RefSiMemoryController::addMemDevice(reg_t address, size_t size,
                                          MemoryDevice *device) {
   add_device(address, device);
   memory_map.push_back({kind, address, size});
+
+  switch (kind) {
+    case TCDM:
+      tcdm = static_cast<RAMDevice *>(device);
+      break;
+    case DRAM:
+      dram = static_cast<RAMDevice *>(device);
+      break;
+    case HOST:
+      host = static_cast<HostRAMDevice *>(device);
+      break;
+    default:
+      break;
+  }
 }
 
 RefSiMemoryWindow *RefSiMemoryController::getWindow(unsigned index) const {
