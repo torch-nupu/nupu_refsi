@@ -17,6 +17,7 @@ add_ca_cl_executable(cl_huca_usm_device ${CMAKE_CURRENT_SOURCE_DIR}/cl_huca_usm_
 add_ca_cl_executable(cl_huca_usm_host ${CMAKE_CURRENT_SOURCE_DIR}/cl_huca_usm_host.cpp)
 add_ca_cl_executable(cl_huca_absf
                      ${CMAKE_CURRENT_SOURCE_DIR}/cl_huca_absf.cpp)
+add_ca_cl_executable(cl_huca_usm_memcpy ${CMAKE_CURRENT_SOURCE_DIR}/cl_huca_usm_memcpy.cpp)
 
 install(TARGETS cl_huca_vector_add_c RUNTIME DESTINATION bin)
 install(TARGETS cl_huca_vector_add_2d_c RUNTIME DESTINATION bin)
@@ -28,3 +29,4 @@ install(TARGETS cl_huca_usm_host RUNTIME DESTINATION bin)
 install(TARGETS cl_huca_control_flow RUNTIME DESTINATION bin)
 install(TARGETS cl_huca_reduce RUNTIME DESTINATION bin)
 install(TARGETS cl_huca_absf RUNTIME DESTINATION bin)
+install(TARGETS cl_huca_usm_memcpy RUNTIME DESTINATION bin)
