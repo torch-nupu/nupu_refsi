@@ -43,7 +43,7 @@ bool queryMemRange(refsi_device_t device, refsi_memory_map_kind kind,
 }
 
 uint32_t getNumDevices() {
-  if (const char *num_devices_env = std::getenv("NUM_HUCA_GPUS")) {
+  if (const char *num_devices_env = std::getenv("NUM_NUPU_GPUS")) {
     if (uint32_t num_devices = atoi(num_devices_env)) {
       return num_devices;
     }

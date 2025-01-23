@@ -258,7 +258,7 @@ int main() {
   }
 
   if (errors == 0) {
-    printf("USM test on HUCA device completed successfully!\n");
+    printf("USM test on NUPU device completed successfully!\n");
   }
 
   // Cleanup
