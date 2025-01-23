@@ -16,6 +16,6 @@
 
 #include <extension/cl_nupu_dummy.h>
 
-extension::cl_nuw_dummy::cl_nupu_dummy()
+extension::cl_nupu_dummy::cl_nupu_dummy()
     : extension("cl_nupu_dummy",
                 usage_category::DEVICE CA_CL_EXT_VERSION(1, 0, 0)) {}
