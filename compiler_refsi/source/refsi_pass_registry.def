@@ -22,6 +22,6 @@
 #endif
 
 MODULE_PASS("refsi-wrapper", refsi_m1::RefSiM1WrapperPass())
-MODULE_PASS("huca-dummy", refsi_m1::HucaDummyPass())
+MODULE_PASS("nupu-dummy", refsi_m1::NupuDummyPass())
 
 #undef MODULE_PASS

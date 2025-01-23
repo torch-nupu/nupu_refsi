@@ -15,16 +15,16 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 add_ca_cl_compiler_extension(
-  ext_riscv_nuway
+  ext_riscv_nupu
   EXTENSIONS
-  cl_nuway_dummy
+  cl_nupu_dummy
   INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/extension/cl_nuway_dummy.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/source/cl_nuway_dummy.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/extension/cl_nupu_dummy.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/source/cl_nupu_dummy.cpp)
 
 add_ca_force_header(
-  PREFIX "nuway_builtins_h"
+  PREFIX "nupu_builtins_h"
   DEVICE_NAME "${CA_RISCV_DEVICE}"
-  PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/extension/nuway_builtins.h")
+  PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/extension/nupu_builtins.h")

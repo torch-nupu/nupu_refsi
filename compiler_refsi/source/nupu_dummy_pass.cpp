@@ -20,7 +20,7 @@
 #include <llvm/IR/DebugInfoMetadata.h>
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/IR/Module.h>
-#include <refsi_m1/huca_dummy_pass.h>
+#include <refsi_m1/nupu_dummy_pass.h>
 
 #include <iostream>
 
@@ -28,12 +28,12 @@ using namespace llvm;
 
 namespace refsi_m1 {
 
-llvm::PreservedAnalyses HucaDummyPass::run(llvm::Module &M,
+llvm::PreservedAnalyses NupuDummyPass::run(llvm::Module &M,
                                            llvm::ModuleAnalysisManager &) {
-  // llvm::dbgs() << "--- start HucaDummyPass\n";
+  // llvm::dbgs() << "--- start NupuDummyPass\n";
   (void)M;
   // M.print(llvm::dbgs(), nullptr);
-  // llvm::dbgs() << "--- fin HucaDummyPass\n";
+  // llvm::dbgs() << "--- fin NupuDummyPass\n";
 
   return PreservedAnalyses::all();
 }

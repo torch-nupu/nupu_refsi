@@ -1,4 +1,4 @@
-# huca_refsi
+# nupu_refsi
 
 This project builds an OpenCL implementation with RISC-V backend based on oneAPI Construction Kit. Key features include:
 
@@ -33,7 +33,7 @@ cmake --build build -t all
 Build with customized platform name
 
 ```bash
-cmake --preset linux_nu -DCA_CL_PLATFORM_NAME=HucaOpenCL -Soneapi-construction-kit -Bbuild
+cmake --preset linux_nu -DCA_CL_PLATFORM_NAME=NupuOpenCL -Soneapi-construction-kit -Bbuild
 cmake --build build -t all
 ```
 
@@ -58,5 +58,5 @@ CA_HAL_DEBUG=1 OCL_ICD_VENDORS=build/share/OpenCL/vendors build/bin/clVectorAddi
 example to run with multiple devices:
 
 ```bash
-NUM_HUCA_GPUS=8 OCL_ICD_VENDORS=build/share/OpenCL/vendors build/bin/cl_huca_multi_devices
+NUM_NUPU_GPUS=8 OCL_ICD_VENDORS=build/share/OpenCL/vendors build/bin/cl_nupu_multi_devices
 ```

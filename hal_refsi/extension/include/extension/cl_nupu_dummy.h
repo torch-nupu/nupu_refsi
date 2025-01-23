@@ -20,9 +20,9 @@
 
 namespace extension {
 
-class cl_nuway_dummy final : public extension {
+class cl_nupu_dummy final : public extension {
  public:
-  cl_nuway_dummy();
+  cl_nupu_dummy();
 };
 
 }  // namespace extension

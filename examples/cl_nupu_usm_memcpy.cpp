@@ -70,7 +70,7 @@ clDeviceMemAllocINTEL_fn ;
 
 int main() {
     cl_int err;
-    
+
     // Get platform and device
     cl_platform_id platform;
     cl_uint num_platforms;
@@ -81,7 +81,7 @@ int main() {
     cl_uint num_devices;
     err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, 0, NULL, &num_devices);
     CHECK_CL_ERROR(err);
-    
+
     cl_device_id* devices = (cl_device_id*)malloc(num_devices * sizeof(cl_device_id));
     err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, num_devices, devices, NULL);
     CHECK_CL_ERROR(err);
@@ -93,7 +93,7 @@ int main() {
         err = clGetDeviceInfo(devices[i], CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
         CHECK_CL_ERROR(err);
         printf("Found device: %s\n", device_name);
-        
+
         if (strstr(device_name, "RefSi M1") != NULL) {
             refsi_device = devices[i];
             printf("Selected device: %s\n", device_name);
@@ -109,16 +109,16 @@ int main() {
 
     // Check host allocation capabilities
     cl_device_unified_shared_memory_capabilities_intel host_caps;
-    err = clGetDeviceInfo(refsi_device, 
+    err = clGetDeviceInfo(refsi_device,
                          CL_DEVICE_HOST_MEM_CAPABILITIES_INTEL,
-                         sizeof(host_caps), 
-                         &host_caps, 
+                         sizeof(host_caps),
+                         &host_caps,
                          NULL);
-    
+
     printf("Host memory capabilities: 0x%lx\n", (unsigned long)host_caps);
-    
+
     // Check if host allocation is supported
-    if (!(host_caps & (CL_UNIFIED_SHARED_MEMORY_ACCESS_INTEL | 
+    if (!(host_caps & (CL_UNIFIED_SHARED_MEMORY_ACCESS_INTEL |
                       CL_UNIFIED_SHARED_MEMORY_ATOMIC_ACCESS_INTEL))) {
         printf("Device does not support USM host allocations\n");
         return -1;
@@ -161,9 +161,9 @@ int main() {
 
     // Get USM function pointers
     printf("Getting USM function pointers...\n");
-    
+
     // Get USM allocation function pointer
-    clHostMemAllocINTEL_fn pfn_clHostMemAllocINTEL = 
+    clHostMemAllocINTEL_fn pfn_clHostMemAllocINTEL =
         (clHostMemAllocINTEL_fn)clGetExtensionFunctionAddressForPlatform(
             platform, "clHostMemAllocINTEL");
     printf("clHostMemAllocINTEL function pointer: %p\n", (void*)pfn_clHostMemAllocINTEL);
@@ -173,7 +173,7 @@ int main() {
     }
 
     // Get USM free function pointer
-    clMemFreeINTEL_fn pfn_clMemFreeINTEL = 
+    clMemFreeINTEL_fn pfn_clMemFreeINTEL =
         (clMemFreeINTEL_fn)clGetExtensionFunctionAddressForPlatform(
             platform, "clMemFreeINTEL");
     if (!pfn_clMemFreeINTEL) {
@@ -182,7 +182,7 @@ int main() {
     }
 
     // Get USM kernel argument setting function pointer
-    clSetKernelArgMemPointerINTEL_fn pfn_clSetKernelArgMemPointerINTEL = 
+    clSetKernelArgMemPointerINTEL_fn pfn_clSetKernelArgMemPointerINTEL =
         (clSetKernelArgMemPointerINTEL_fn)clGetExtensionFunctionAddressForPlatform(
             platform, "clSetKernelArgMemPointerINTEL");
     if (!pfn_clSetKernelArgMemPointerINTEL) {
@@ -190,7 +190,7 @@ int main() {
         return -1;
     }
 
-    clDeviceMemAllocINTEL_fn pfn_clDeviceMemAllocINTEL = 
+    clDeviceMemAllocINTEL_fn pfn_clDeviceMemAllocINTEL =
         (clDeviceMemAllocINTEL_fn)clGetExtensionFunctionAddressForPlatform(
             platform, "clDeviceMemAllocINTEL");
     printf("clDeviceMemAllocINTEL function pointer: %p\n", (void*)pfn_clDeviceMemAllocINTEL);
@@ -199,7 +199,7 @@ int main() {
         return -1;
     }
 
-    clEnqueueMemcpyINTEL_fn pfn_clEnqueueMemcpyINTEL = 
+    clEnqueueMemcpyINTEL_fn pfn_clEnqueueMemcpyINTEL =
         (clEnqueueMemcpyINTEL_fn)clGetExtensionFunctionAddressForPlatform(
             platform, "clEnqueueMemcpyINTEL");
     printf("clEnqueueMemcpyINTEL function pointer: %p\n", (void*)pfn_clEnqueueMemcpyINTEL);
@@ -211,19 +211,19 @@ int main() {
     // Modify memory allocation part
     printf("Starting memory allocation...\n");
     printf("Context: %p\n", (void*)context);
-    
+
     // Use static properties array
     cl_mem_properties_intel properties[] = {0};  // Empty properties list
-    
+
     printf("Calling clHostMemAllocINTEL with:\n");
     printf("- context: %p\n", (void*)context);
     printf("- properties: %p\n", (void*)properties);
     printf("- size: %zu\n", ARRAY_SIZE * sizeof(int));
     printf("- alignment: 128\n");  // Use 128 byte alignment
-    
+
     cl_int alloc_err = CL_SUCCESS;
     int* src1 = NULL;
-    
+
     // Try using try-catch block to catch potential crashes
     src1 = (int *)malloc(ARRAY_SIZE * sizeof(int));
     if (!src1) {
@@ -284,7 +284,7 @@ int main() {
     CHECK_CL_ERROR(pfn_clEnqueueMemcpyINTEL(queue, 0, d_src2, src2, bytes, 0, nullptr, nullptr));
 
     // Create and compile kernel
-    cl_program program = clCreateProgramWithSource(context, 1, &kernel_source, 
+    cl_program program = clCreateProgramWithSource(context, 1, &kernel_source,
                                                  NULL, &err);
     CHECK_CL_ERROR(err);
 
@@ -305,7 +305,7 @@ int main() {
     // Execute kernel
     size_t global_size = ARRAY_SIZE;
     size_t local_size = 64;  // Set workgroup size
-    err = clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 
+    err = clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size,
                                 0, NULL, NULL);
     CHECK_CL_ERROR(err);
 
@@ -319,7 +319,7 @@ int main() {
     int errors = 0;
     for (int i = 0; i < ARRAY_SIZE; i++) {
         if (dst[i] != i + i * 2) {
-            printf("Error at index %d: %d != %d + %d\n", 
+            printf("Error at index %d: %d != %d + %d\n",
                    i, dst[i], i, i * 2);
             errors++;
             if (errors > 10) break;
@@ -327,7 +327,7 @@ int main() {
     }
 
     if (errors == 0) {
-        printf("USM memcpy test on HUCA device completed successfully!\n");
+        printf("USM memcpy test on NUPU device completed successfully!\n");
     }
 
     // Cleanup

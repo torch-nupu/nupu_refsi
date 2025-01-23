@@ -41,7 +41,7 @@ if(CA_RUNTIME_COMPILER_ENABLED)
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/refsi_wrapper_pass.h
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/info.h
       ${CMAKE_CURRENT_SOURCE_DIR}/include/refsi_m1/module.h
-      ${CMAKE_CURRENT_SOURCE_DIR}/source/huca_dummy_pass.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/source/nupu_dummy_pass.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/source/target.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/source/refsi_cl_builtin_info.cpp
   )

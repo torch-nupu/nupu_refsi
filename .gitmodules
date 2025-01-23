@@ -1,10 +1,10 @@
 [submodule "oneapi-construction-kit"]
 	path = oneapi-construction-kit
-	url = git@github.com:nuway-ai/oneapi-construction-kit.git
+	url = git@github.com:torch-nupu/oneapi-construction-kit.git
 	branch = dev
 [submodule "driver/external/riscv-isa-sim"]
 	path = driver/external/riscv-isa-sim
-	url = git@github.com:nuway-ai/riscv-isa-sim.git
+	url = git@github.com:torch-nupu/riscv-isa-sim.git
 	branch = dev_refsi
 [submodule "examples/OpenCL-CLHPP"]
 	path = examples/OpenCL-CLHPP

@@ -14,17 +14,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#ifndef REFSI_M1_HUCA_DUMMY_PASS
-#define REFSI_M1_HUCA_DUMMY_PASS
+#ifndef REFSI_M1_NUPU_DUMMY_PASS
+#define REFSI_M1_NUPU_DUMMY_PASS
 
 #include <llvm/IR/PassManager.h>
 
 namespace refsi_m1 {
-class HucaDummyPass final : public llvm::PassInfoMixin<HucaDummyPass> {
+class NupuDummyPass final : public llvm::PassInfoMixin<NupuDummyPass> {
  public:
   llvm::PreservedAnalyses run(llvm::Module &, llvm::ModuleAnalysisManager &);
 };
 
 }  // namespace refsi_m1
 
-#endif  // REFSI_M1_HUCA_DUMMY_PASS
+#endif  // REFSI_M1_NUPU_DUMMY_PASS

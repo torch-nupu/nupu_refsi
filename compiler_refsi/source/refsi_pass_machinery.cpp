@@ -38,7 +38,7 @@
 #include <riscv/ir_to_builtins_pass.h>
 #include <vecz/pass.h>
 
-#include "refsi_m1/huca_dummy_pass.h"
+#include "refsi_m1/nupu_dummy_pass.h"
 
 namespace refsi_m1 {
 
@@ -167,7 +167,7 @@ llvm::ModulePassManager RefSiM1PassMachinery::getLateTargetPasses() {
     PM.addPass(RefSiM1WrapperPass());
   }
 
-  PM.addPass(HucaDummyPass());
+  PM.addPass(NupuDummyPass());
 
   PM.addPass(compiler::utils::AddMetadataPass<
              compiler::utils::VectorizeMetadataAnalysis,
